@@ -8,16 +8,10 @@ int main() {
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	string curTime, naTime;
-	cin >> curTime >> naTime;
-
-	int curH = (curTime[0] - '0') * 10 + curTime[1] - '0';
-	int naH = (naTime[0] - '0') * 10 + naTime[1] - '0';
-	int curM = (curTime[3] - '0') * 10 + curTime[4] - '0';
-	int naM = (naTime[3] - '0') * 10 + naTime[4] - '0';
-	int curS = (curTime[6] - '0') * 10 + curTime[7] - '0';
-	int naS = (naTime[6] - '0') * 10 + naTime[7] - '0';
-
+	int curH, curM, curS, naH, naM, naS;
+	char c;
+	cin >> curH >> c >> curM >> c >> curS >> naH >> c >> naM >> c >> naS;
+	
 	int resultH = naH - curH;
 	int resultM = naM - curM;
 	int resultS = naS - curS;
@@ -34,7 +28,7 @@ int main() {
 		resultH = resultH + 24;
 
 	string result = "";
-	if (resultH < 10) 
+	if (resultH < 10)
 		result += "0";
 	result += to_string(resultH) + ":";
 	if (resultM < 10)
