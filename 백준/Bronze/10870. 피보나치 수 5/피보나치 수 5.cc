@@ -1,26 +1,22 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-int fibonacci(int N);
-
-int main()
-{
-	cout.tie(NULL);
+int main() {
+	ios::sync_with_stdio(false);
 	cin.tie(NULL);
-	ios_base::sync_with_stdio(false);
 
-	int N = 0;
-	cin >> N;
+	vector<int> v;
+	v.push_back(0);
+	v.push_back(1);
 
-	cout << fibonacci(N);
+	int n = 0;
+	cin >> n;
+	
+	for (int i = 2; i <= n; ++i)
+		v.push_back(v[i - 1] + v[i - 2]);
+
+	cout << v[n];
 
 	return 0;
-}
-
-int fibonacci(int N)
-{
-	if (N == 0 || N == 1)
-		return N;
-	
-	return fibonacci(N - 1) + fibonacci(N - 2);
 }
