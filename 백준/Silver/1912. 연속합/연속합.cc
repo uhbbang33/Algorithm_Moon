@@ -3,8 +3,6 @@
 #include <algorithm>
 using namespace std;
 
-int dp[1000000]{};
-
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -12,22 +10,25 @@ int main() {
 	int n = 0;
 	cin >> n;
 	
-	vector<int> v;
-	v.push_back(0);
+	vector<int> nums;
+	nums.push_back(0);
+	vector<int> dp;
+	dp.push_back(0);
 
 	int num;
 	int max = 0;
 	for (int i = 1; i <= n; ++i) {
 		cin >> num;
-		v.push_back(num);
-		
+		nums.push_back(num);
+		dp.push_back(0);
+
 		if (i == 1)
 			max = dp[i] = num;
 
-		if (v[i] >= dp[i - 1] + v[i])
-			dp[i] = v[i];
+		if (nums[i] >= dp[i - 1] + nums[i])
+			dp[i] = nums[i];
 		else
-			dp[i] = dp[i - 1] + v[i];
+			dp[i] = dp[i - 1] + nums[i];
 
 		if (dp[i] > max)
 			max = dp[i];
