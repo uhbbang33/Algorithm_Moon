@@ -25,20 +25,14 @@ int main()
         dp[i] = num;
 
         int tempMax = 0;
-        int tempLocation = 1;
-
-        for (int j = i - 1; j >= 1; --j) {
-            if (v[i] > v[j] && tempMax < dp[j]) {
+        for (int j = i - 1; j >= 1; --j)
+            if (v[i] > v[j] && tempMax < dp[j])
                 tempMax = dp[j];
-                tempLocation = j;
-            }
-        }
 
         dp[i] = tempMax + v[i];
 
-        if (max < dp[i]) {
+        if (max < dp[i])
             max = dp[i];
-        }
     }
 
     cout << max;
