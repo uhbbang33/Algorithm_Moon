@@ -37,6 +37,13 @@ void BFS(int a, int b) {
 	}
 }
 
+void GraphBFS() {
+	for (int i = 0; i < r; ++i)
+		for (int j = 0; j < c; ++j)
+			if (graph[i][j] == 'O')
+				BFS(i, j);
+}
+
 int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -64,10 +71,7 @@ int main() {
 		}
 	}
 	else {
-		for (int i = 0; i < r; ++i)
-			for (int j = 0; j < c; ++j)
-				if (graph[i][j] == 'O')
-					BFS(i, j);
+		GraphBFS();
 
 		if (n % 4 == 1) {
 			for (int i = 0; i < r; ++i)
@@ -75,10 +79,7 @@ int main() {
 					graph[i][j] = tempGraph[i][j];
 					tempGraph[i][j] = 'O';
 				}
-			for (int i = 0; i < r; ++i)
-				for (int j = 0; j < c; ++j)
-					if (graph[i][j] == 'O')
-						BFS(i, j);
+			GraphBFS();
 		}
 
 		for (int i = 0; i < r; ++i) {
