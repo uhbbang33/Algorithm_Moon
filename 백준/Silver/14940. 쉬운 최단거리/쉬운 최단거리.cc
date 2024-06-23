@@ -30,15 +30,7 @@ void BFS(int y, int x) {
 				|| result[ny][nx] != -1)
 				continue;
 
-			if (graph[ny][nx] == 0)
-				result[ny][nx] = 0;
-			else
-				result[ny][nx] = result[a][b] + 1;
-
-			if (graph[a][b] == 0 && graph[ny][nx] == 1) {
-				result[ny][nx] = -1;
-				continue;
-			}
+			result[ny][nx] = result[a][b] + 1;
 
 			q.push({ ny, nx });
 		}
@@ -60,9 +52,8 @@ int main() {
 			
 			result[i][j] = -1;
 
-			if (graph[i][j] == 0) {
+			if (graph[i][j] == 0)
 				result[i][j] = 0;
-			}
 			else if (graph[i][j] == 2) {
 				tempY = i;
 				tempX = j;
@@ -72,9 +63,9 @@ int main() {
 	BFS(tempY, tempX);
 
 	for (int i = 0; i < n; ++i) {
-		for (int j = 0; j < m; ++j) {
+		for (int j = 0; j < m; ++j)
 			cout << result[i][j] << " ";
-		}
+
 		cout << "\n";
 	}
 
