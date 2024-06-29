@@ -1,6 +1,4 @@
 #include <iostream>
-#include <math.h>
-#include <string>
 using namespace std;
 
 int main() {
@@ -20,8 +18,7 @@ int main() {
 		else if (s[i] == 'K') {
 			maxStr += "5";
 
-			if (mCount >= 1)
-			{
+			if (mCount >= 1) {
 				minStr += "1";
 				for (int i = 0; i < mCount; ++i) {
 					maxStr += "0";
