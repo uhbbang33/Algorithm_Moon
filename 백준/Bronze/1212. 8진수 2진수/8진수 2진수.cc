@@ -13,29 +13,20 @@ int main() {
 		return 0;
 	}
 
+	int nums[3] = { 4, 2, 1 };
 	string result = "";
+
 	for (int i = 0; i < num.length(); ++i) {
 		int temp = (int)(num[i] - '0');
-		
-		if (temp - 4 >= 0) {
-			result += "1";
-			temp -= 4;
-		}
-		else result += "0";
-		
-		if (temp - 2 >= 0) {
-			result += "1";
-			temp -= 2;
-		}
-		else result += "0";
 
-		if (temp - 1 >= 0) {
-			result += "1";
-			temp -= 1;
+		for (int j = 0; j < 3; ++j) {
+			if (temp - nums[j] >= 0) {
+				result += "1";
+				temp -= nums[j];
+			}
+			else result += "0";
 		}
-		else result += "0";
 	}
-
 
 	while (result[0] != '1')
 		result.erase(result.begin());
