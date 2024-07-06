@@ -21,7 +21,6 @@ int main() {
 		}
 	}
 	
-	int result = 0;
 	for (int i = 0; i < 25; ++i) {
 		cin >> num;
 		int a = bingo[num].first;
@@ -41,10 +40,11 @@ int main() {
 		if (rowCnt[a] == 5) ++bingoCnt;
 		if (colCnt[b] == 5) ++bingoCnt;
 
-		if (bingoCnt >= 3 && result == 0)
-			result = i + 1;
+		if (bingoCnt >= 3) {
+			cout << i + 1;
+			break;
+		}
 	}
-	cout << result;
 
 	return 0;
 }
