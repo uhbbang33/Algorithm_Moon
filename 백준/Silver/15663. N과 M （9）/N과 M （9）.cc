@@ -5,8 +5,7 @@
 using namespace std;
 
 int n, m;
-vector<int> v;
-
+int v[9]{};
 int arr[9]{};
 bool used[9]{};
 
@@ -37,10 +36,9 @@ int main() {
 
 	cin >> n >> m;
 
-	v.resize(n);
 	for (int i = 0; i < n; ++i)
 		cin >> v[i];
-	sort(v.begin(), v.end());
+	sort(v, v + n);
 
 	Backtracking(0);
 
