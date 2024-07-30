@@ -10,7 +10,7 @@ int main() {
 
 	int n = 0;
 	cin >> n;
-	
+
 	for (int i = 0; i < n; ++i)
 		cin >> p[i].second >> p[i].first;
 	sort(p, p + n);
