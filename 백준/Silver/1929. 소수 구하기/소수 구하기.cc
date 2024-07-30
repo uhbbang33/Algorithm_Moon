@@ -9,12 +9,12 @@ int main() {
 	int m, n;
 	cin >> m >> n;
 
+	if (m == 1)
+		++m;
+
 	bool result = false;
 
 	for (int i = m; i <= n; ++i) {
-		if (i == 1)
-			continue;
-
 		result = false;
 		for (int j = 2; j * j <= i; ++j) {
 			if (i % j == 0) {
