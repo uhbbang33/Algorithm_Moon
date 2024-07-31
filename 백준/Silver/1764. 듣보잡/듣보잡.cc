@@ -1,5 +1,5 @@
 #include <iostream>
-#include <map>
+#include <set>
 #include <vector>
 #include <algorithm>
 using namespace std;
@@ -11,20 +11,19 @@ int main() {
 	int n, m;
 	cin >> n >> m;
 
-	map<string, int> nameMap;
+	set<string> nameSet;
 	vector<string> resultVec;
 
 	string name;
 	for (int i = 0; i < n; ++i) {
 		cin >> name;
-		++nameMap[name];
+		nameSet.insert(name);
 	}
 	for (int i = 0; i < m; ++i) {
 		cin >> name;
 
-		if (nameMap[name] > 0) {
+		if (nameSet.find(name) != nameSet.end())
 			resultVec.push_back(name);
-		}
 	}
 
 	cout << resultVec.size() << "\n";
