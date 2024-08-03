@@ -17,14 +17,12 @@ int main() {
 	for (int i = 0; i < totalArea; ++i) {
 		cin >> height[i];
 
-		if (height[i] > max) max = height[i];
-		if (height[i] < min) min = height[i];
 	}
 
 	int resultTime = 1e9;
 	int resultHeight = 0;
 
-	for (int i = max; i >= min; --i) {
+	for (int i = 256; i >= 0; --i) {
 		int currentTime = 0;
 		int inventory = b;
 
