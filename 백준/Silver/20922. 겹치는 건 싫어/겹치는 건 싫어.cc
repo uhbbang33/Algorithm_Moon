@@ -2,7 +2,8 @@
 #include <map>
 using namespace std;
 
-int arr[1000001]{};
+int arr[200001]{};
+int cnt[200001]{};
 
 int main() {
 	ios::sync_with_stdio(false);
@@ -11,19 +12,18 @@ int main() {
 	int n, k;
 	cin >> n >> k;
 
-	map<int, int> m;
 	int result = 0, curResult = 0;
 	int startP = 0;
 
 	for (int i = 0; i < n; ++i) {
 		cin >> arr[i];
 
-		++m[arr[i]];
+		++cnt[arr[i]];
 
-		if (m[arr[i]] > k)
+		if (cnt[arr[i]] > k)
 		{
 			while (startP < i) {
-				--m[arr[startP]];
+				--cnt[arr[startP]];
 				--curResult;
 
 				if (arr[startP] == arr[i]) {
