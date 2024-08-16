@@ -1,6 +1,5 @@
 #include <iostream>
 #include <math.h>
-#include <vector>
 using namespace std;
 
 bool isPrime(int num) {
@@ -19,19 +18,24 @@ int main() {
 	cin >> m >> n;
 	if (m == 1) ++m;
 
-	vector<int> v;
+	bool isFirst = true;
+	int firstPrime = 0;
 	int sum = 0;
+
 	for (int i = m; i <= n; ++i) {
 		if (isPrime(i)) {
-			v.push_back(i);
+			if (isFirst) {
+				firstPrime = i;
+				isFirst = false;
+			}
 			sum += i;
 		}
 	}
 
-	if (v.empty())
+	if (isFirst)
 		cout << "-1";
 	else
-		cout << sum << "\n" << v[0];
+		cout << sum << "\n" << firstPrime;
 
 	return 0;
 }
