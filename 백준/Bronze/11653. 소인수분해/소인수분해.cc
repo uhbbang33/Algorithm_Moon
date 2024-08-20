@@ -8,12 +8,12 @@ int main() {
 
 	int n = 0;
 	cin >> n;
-	
+
 	if (n == 1)
 		return 0;
 
-	int sqrtN = sqrt(n);
-	for (int i = 2; i <= sqrtN; ++i) {
+	int tempN = n;
+	for (int i = 2; i * i <= tempN; ++i) {
 		while (n % i == 0) {
 			n /= i;
 			cout << i << "\n";
