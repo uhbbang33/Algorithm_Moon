@@ -1,25 +1,22 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 using namespace std;
+
+#define MAX 10001
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	vector<int> primeVec;
+	vector<int> primeVec(MAX, true);
+	primeVec[0] = false;
+	primeVec[1] = false;
 
-	for (int i = 2; i < 10001; ++i) {
-		bool isPrime = true;
+	for (int i = 2; i * i < MAX; ++i) {
+		if (!primeVec[i]) continue;
 
-		for (int j = 2; j * j <= i; ++j)
-			if (i % j == 0) {
-				isPrime = false;
-				break;
-			}
-
-		if (isPrime)
-			primeVec.push_back(i);
+		for (int j = i * i; j < MAX; j += i)
+			primeVec[j] = false;
 	}
 
 	int t;
@@ -29,18 +26,11 @@ int main() {
 	for (int i = 0; i < t; ++i) {
 		cin >> n;
 
-		int cnt = 0;
-		int first = 0, second = 0;
-		while (primeVec[cnt] <= n / 2) {
-			int temp = n - primeVec[cnt];
-			if (find(primeVec.begin(), primeVec.end(), temp) != primeVec.end()) {
-				first = primeVec[cnt];
-				second = temp;
+		for (int j = n / 2; j >= 2; --j)
+			if (primeVec[j] && primeVec[n - j]) {
+				cout << j << " " << n - j << "\n";
+				break;
 			}
-			++cnt;
-		}
-
-		cout << first << " " << second << "\n";
 	}
 
 	return 0;
