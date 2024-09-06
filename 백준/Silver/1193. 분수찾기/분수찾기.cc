@@ -5,32 +5,19 @@ int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	int num;
-	cin >> num;
+	int n;
+	cin >> n;
 
-	bool isPlus = true;
-
-	int x = 1, y = 1;
-	for (int i = 1; i < num; ++i) {
-		if (x == 1 && isPlus) {
-			++y;
-			isPlus = false;
-		}
-		else if (y == 1 && !isPlus) {
-			++x;
-			isPlus = true;
-		}
-		else if (isPlus) {
-			--x;
-			++y;
-		}
-		else if (!isPlus) {
-			++x;
-			--y;
-		}
+	int i = 1;
+	while (n > i) {
+		n -= i;
+		++i;
 	}
 
-	cout << x << "/" << y;
+	if (i % 2 == 0)
+		cout << n << "/" << i - (n - 1);
+	else
+		cout << i - (n - 1) << "/" << n;
 
 	return 0;
 }
