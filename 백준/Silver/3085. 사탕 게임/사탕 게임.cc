@@ -1,105 +1,79 @@
 #include <iostream>
 using namespace std;
 
-void rowCheck(int N, char board[], int& max, int sameCandy[]);
-void colCheck(int N, char board[], int& max, int sameCandy[]);
+char arr[51][51]{};
+int n;
 
-int main()
-{
-	int N = 0;
-	cin >> N;
+int CheckLength(int r, int c) {
+	int curLength = 0;
+	int maxLength = 0;
+	char cur = '1';
 
-	char* board = new char[N * N]{};
-	for (int i = 0; i < N * N; ++i)
-		cin >> board[i];
+	// row
+	for (int i = 0; i < n; ++i) {
+		if (cur != arr[r][i]) {
+			maxLength = max(maxLength, curLength);
+			curLength = 1;
+			cur = arr[r][i];
+		}
+		else
+			++curLength;
+	}
+	maxLength = max(maxLength, curLength);
 
-	int max = 0;
+	// col
+	curLength = 0;
+	cur = '1';
 
-	int* sameCandy = new int[N] {};
-	for (int i = 0; i < N; ++i)
-		sameCandy[i] = 1;
+	for (int i = 0; i < n; ++i) {
+		if (cur != arr[i][c]) {
+			maxLength = max(maxLength, curLength);
+			curLength = 1;
+			cur = arr[i][c];
+		}
+		else
+			++curLength;
+	}
+	maxLength = max(maxLength, curLength);
 
-	// 위아래 바꾸기
-	for (int l = 0; l < N * (N - 1); ++l) {
+	return maxLength;
+}
 
-		swap(board[l], board[l + N]);
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
 
-		rowCheck(N, board, max, sameCandy);
-		colCheck(N, board, max, sameCandy);
+	cin >> n;
+	for (int i = 0; i < n; ++i)
+		for (int j = 0; j < n; ++j) 
+			cin >> arr[i][j];
 
-		swap(board[l], board[l + N]);
+	int maxLength = 0;
+
+	// 바꾸지 않은 경우도 먼저 체크
+	for (int i = 0; i < n; ++i)
+		maxLength = max(CheckLength(i, i), maxLength);
+
+	// 오른쪽, 아래만 바꾸기
+	// 해당 열, 행만 체크
+	for (int i = 0; i < n; ++i) {
+		for (int j = 0; j < n; ++j) {
+			if (j + 1 < n && arr[i][j] != arr[i][j + 1]) {
+				swap(arr[i][j], arr[i][j + 1]);
+				maxLength = max(CheckLength(i, j), maxLength);
+				maxLength = max(CheckLength(i, j + 1), maxLength);
+				swap(arr[i][j], arr[i][j + 1]);
+			}
+			if (i + 1 < n && arr[i][j] != arr[i + 1][j]) {
+				swap(arr[i][j], arr[i+1][j]);
+				maxLength = max(CheckLength(i, j), maxLength);
+				maxLength = max(CheckLength(i + 1, j), maxLength);
+				swap(arr[i][j], arr[i + 1][j]);
+			}
+		}
 	}
 
-	// 왼쪽 오른쪽 바꾸기
-	for (int l = 0; l < N * N - 1; ++l) {
-		if ((l + 1) % N == 0)
-			continue;
-
-		swap(board[l], board[l + 1]);
-
-		rowCheck(N, board, max, sameCandy);
-		colCheck(N, board, max, sameCandy);
-
-		swap(board[l], board[l + 1]);
-	}
-	
-	cout << max << endl;
-
-	delete[] board, sameCandy;
+	cout << maxLength;
 
 	return 0;
-}
-
-void rowCheck(int N, char board[], int& max, int sameCandy[])
-{
-	char lastBoard = 'A';
-
-	int cnt = 0;
-	
-	for (int i = 0; i < N; ++i) {					// 행
-		lastBoard = 'A';
-		for (int j = i * N; j < (i + 1) * N; ++j) {	// 행의 원소 하나하나
-			if (board[j] == lastBoard)
-				++sameCandy[cnt];
-			else if (max > sameCandy[cnt])
-				sameCandy[cnt] = 1;
-			else
-				++cnt;
-
-			lastBoard = board[j];
-		}
-	}
-
-	for (int i = 0; i < N; ++i) {
-		if (max < sameCandy[i])
-			max = sameCandy[i];
-		sameCandy[i] = 1;
-	}
-}
-
-void colCheck(int N, char board[], int& max, int sameCandy[])
-{
-	char lastBoard = 'A';
-
-	int cnt = 0;
-
-	for (int i = 0; i < N; ++i) {					// 열
-		lastBoard = 'A';
-		for (int j = i; j <= N * (N - 1) + i; j += N) {
-			if (board[j] == lastBoard)
-				++sameCandy[cnt];
-			else if (max > sameCandy[cnt])
-				sameCandy[cnt] = 1;
-			else
-				++cnt;
-
-			lastBoard = board[j];
-		}
-	}
-
-	for (int i = 0; i < N; ++i) {
-		if (max < sameCandy[i])
-			max = sameCandy[i];
-		sameCandy[i] = 1;
-	}
 }
