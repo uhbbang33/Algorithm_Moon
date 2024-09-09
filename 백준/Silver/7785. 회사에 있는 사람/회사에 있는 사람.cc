@@ -9,16 +9,19 @@ int main() {
 	int n;
 	cin >> n;
 
-	map<string, string, greater<>> m;
+	map<string, int, greater<>> m;
 
 	for (int i = 0; i < n; ++i) {
 		string name, log;
 		cin >> name >> log;
-		m[name] = log;
+		if (log == "enter")
+			m[name] = 1;
+		else
+			m[name] = 0;
 	}
 
 	for (const auto& p : m)
-		if (p.second != "leave")
+		if (p.second == 1)
 			cout << p.first << "\n";
 
 	return 0;
