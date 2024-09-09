@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 int arr[101]{};
@@ -16,17 +17,11 @@ int main() {
 	while (m--) {
 		int i, j;
 		cin >> i >> j;
-
-		while (i < j) {
-			swap(arr[i], arr[j]);
-			++i;
-			--j;
-		}
+		reverse(arr + i, arr + j + 1);
 	}
 
 	for (int i = 1; i <= n; ++i)
 		cout << arr[i] << " ";
-
 
 	return 0;
 }
