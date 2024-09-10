@@ -1,28 +1,24 @@
 #include <iostream>
-#include <vector>
-
 using namespace std;
 
-int house[1001][3];
+int dp[1001][3]{};
 
-int main()
-{
-	int n = 0;
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	int n;
 	cin >> n;
 
-	int cost[3] = {};
-
-	for(int i = 0; i < 3; ++i)
-		house[0][i] = 0;
-
+	int cost[3]{};
 	for (int i = 1; i <= n; ++i) {
 		cin >> cost[0] >> cost[1] >> cost[2];
 
-		house[i][0] = min(house[i - 1][1], house[i - 1][2]) + cost[0];
-		house[i][1] = min(house[i - 1][0], house[i - 1][2]) + cost[1];
-		house[i][2] = min(house[i - 1][1], house[i - 1][0]) + cost[2];
+		dp[i][0] = min(dp[i - 1][1], dp[i - 1][2]) + cost[0];
+		dp[i][1] = min(dp[i - 1][0], dp[i - 1][2]) + cost[1];
+		dp[i][2] = min(dp[i - 1][0], dp[i - 1][1]) + cost[2];
 	}
-	cout << min(house[n][2], min(house[n][0], house[n][1]));
+	cout << min(dp[n][0], min(dp[n][1], dp[n][2]));
 
 	return 0;
 }
