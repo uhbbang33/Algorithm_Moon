@@ -14,7 +14,7 @@ int main() {
 	dp[1] = 1;
 	dp[2] = 2;
 	for (int i = 3; i <= n; ++i) {
-		int minCnt = 100000;
+		dp[i] = 100000;
 
 		for (int j = sqrt(i); j > 0; --j) {
 			int curCnt = 1;
@@ -22,9 +22,8 @@ int main() {
 
 			curN -= j * j;
 			curCnt += dp[curN];
-			minCnt = min(curCnt, minCnt);
+			dp[i] = min(curCnt, dp[i]);
 		}
-		dp[i] = minCnt;
 	}
 	cout << dp[n];
 
