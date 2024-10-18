@@ -1,8 +1,7 @@
 #include <iostream>
+#include <vector>
 #include <algorithm>
 using namespace std;
-
-int arr[1000001]{};
 
 int main() {
 	ios::sync_with_stdio(false);
@@ -10,25 +9,28 @@ int main() {
 
 	int n, x;
 	cin >> n;
+
+	vector<int> v(n);
 	for (int i = 0; i < n; ++i)
-		cin >> arr[i];
+		cin >> v[i];
 	cin >> x;
 
-	sort(arr, arr + n);
+	sort(v.begin(), v.end());
 
 	int result = 0;
-	for (int i = 0; i < n; ++i) {
-		if (arr[i] >= x)
-			break;
-		for (int j = i + 1; j < n; ++j) {
-			if (arr[i] + arr[j] > x)
-				break;
+	int left = 0, right = n-1;
+	while (left < right) {
+		int sum = v[left] + v[right];
 
-			if (arr[i] + arr[j] == x) {
-				++result;
-				break;
-			}
+		if (sum == x) {
+			++result;
+			++left;
+			--right;
 		}
+		else if (sum > x)
+			--right;
+		else if (sum < x) 
+			++left;
 	}
 
 	cout << result;
