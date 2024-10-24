@@ -4,10 +4,9 @@
 using namespace std;
 
 #define MAX_VERTEX 20001
-#define MAX_EDGE 300001
-#define INF 1e9
+#define INF 1e7
 
-vector<pair<int, int>> edge[MAX_EDGE];
+vector<pair<int, int>> edge[MAX_VERTEX];
 int d[MAX_VERTEX]{};
 
 void Dijkstra(int start) {
