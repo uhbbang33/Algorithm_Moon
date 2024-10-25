@@ -5,16 +5,16 @@ using namespace std;
 
 #define INF 1e9
 
-vector<pair<int, int>> edge[10001]{};
-int d[10001]{};
+int n, m, x;	// 학생, 도로, 목적지
+vector<pair<int, int>> graph[2][1001]{};
+int d[2][10001]{};
 int result[1001]{};
 
-void Dijkstra(int start) {
-	d[start] = 0;
+void Dijkstra(int num) {
+	d[num][x] = 0;
 
 	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq;
-
-	pq.push({ 0, start });
+	pq.push({ 0, x });
 
 	while (!pq.empty()) {
 		int distance = pq.top().first;
@@ -22,15 +22,15 @@ void Dijkstra(int start) {
 
 		pq.pop();
 
-		if (distance > d[cur])
+		if (distance > d[num][cur])
 			continue;
 
-		for (int i = 0; i < edge[cur].size(); ++i) {
-			int nextDistance = distance + edge[cur][i].second;
-			int next = edge[cur][i].first;
+		for (int i = 0; i < graph[num][cur].size(); ++i) {
+			int nextDistance = distance + graph[num][cur][i].second;
+			int next = graph[num][cur][i].first;
 
-			if (d[next] > nextDistance) {
-				d[next] = nextDistance;
+			if (d[num][next] > nextDistance) {
+				d[num][next] = nextDistance;
 				pq.push({nextDistance, next});
 			}
 		}
@@ -41,37 +41,27 @@ int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
 
-	int n, m, x;	// 학생, 도로, 목적지
 	cin >> n >> m >> x;
 
 	for (int i = 0; i < m; ++i) {
 		int start, end, t;
 		cin >> start >> end >> t;
 
-		edge[start].push_back({ end, t });
+		graph[0][start].push_back({ end, t });
+		graph[1][end].push_back({ start, t });
 	}
 
-	for (int i = 0; i <= n; ++i) {
-		for (int j = 0; j <= n; ++j)
-			d[j] = INF;
-
-		Dijkstra(i);
-
-		result[i] = d[x];
+	for (int j = 0; j <= n; ++j) {
+		d[0][j] = INF;
+		d[1][j] = INF;
 	}
 	
+	Dijkstra(0);
+	Dijkstra(1);
+
 	int maxResult = 0;
-	for (int i = 0; i <= n; ++i) {
-		for (int j = 0; j <= n; ++j)
-			d[j] = INF;
-
-		Dijkstra(x);
-
-		result[i] += d[i];
-
-		if (result[i] < INF)
-			maxResult = max(result[i], maxResult);
-	}
+	for (int i = 1; i <= n; ++i)
+		maxResult = max(maxResult, d[0][i] + d[1][i]);
 
 	cout << maxResult;
 
