@@ -8,7 +8,7 @@ struct GYS {
 	int kor, eng, math;
 };
 
-bool comp(GYS a, GYS b) {
+bool comp(GYS& a, GYS& b) {
 	if (a.kor == b.kor) {
 		if (a.eng == b.eng) {
 			if (a.math == b.math)
