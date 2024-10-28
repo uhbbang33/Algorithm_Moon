@@ -3,7 +3,22 @@
 #include <algorithm>
 using namespace std;
 
-typedef pair<int, pair<int, pair<int, string>>> pair_t;
+struct GYS {
+	string name;
+	int kor, eng, math;
+};
+
+bool comp(GYS a, GYS b) {
+	if (a.kor == b.kor) {
+		if (a.eng == b.eng) {
+			if (a.math == b.math)
+				return a.name < b.name;
+			return a.math > b.math;
+		}
+		return a.eng < b.eng;
+	}
+	return a.kor > b.kor;
+}
 
 int main() {
 	ios::sync_with_stdio(false);
@@ -12,36 +27,15 @@ int main() {
 	int n;
 	cin >> n;
 	
-	vector<pair_t> v;
+	vector<GYS> v(n);
 
-	for (int i = 0; i < n; ++i) {
-		string name;
-		int k, e, m;
-		cin >> name >> k >> e >> m;
-
-		v.push_back({ k,{e,{m, name}} });
-	}
+	for (int i = 0; i < n; ++i) 
+		cin >> v[i].name >> v[i].kor >> v[i].eng >> v[i].math;
 	
-	sort(v.begin(), v.end(), [](pair_t a, pair_t b) -> bool {
-		if (a.first == b.first) {
-			if (a.second.first == b.second.first) {
-				if (a.second.second.first == b.second.second.first)
-					return a.second.second.second < b.second.second.second;
-				return a.second.second.first > b.second.second.first;
-			}
-			return a.second.first < b.second.first;
-		}
-		
-		return a.first > b.first;
+	sort(v.begin(), v.end(), comp);
 
-		});
-
-	for (int i = 0; i < n; ++i) {
-		//cout << v[i].first << " " << v[i].second.first << " "
-		//	<< v[i].second.second.first << " " << v[i].second.second.second;
-
-		cout << v[i].second.second.second << "\n";
-	}
+	for (int i = 0; i < n; ++i) 
+		cout << v[i].name << "\n";
 
 
 	return 0;
