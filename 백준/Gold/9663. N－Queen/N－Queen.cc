@@ -2,8 +2,8 @@
 using namespace std;
 
 int n;
-int visited[16][16]{};
 int result = 0;
+int queens[16]{};
 
 void NQueen(int y) {
 	if (y == n) {
@@ -12,24 +12,19 @@ void NQueen(int y) {
 	}
 
 	for (int x = 0; x < n; ++x) {
+		queens[y] = x;
+		
 		bool isPossible = true;
-
-		// 어차피 row 까지만 퀸을 놓았으므로 i는 row까지
 		for (int i = 0; i < y; ++i) {
-			if (visited[i][x]
-				|| (x - (y - i) >= 0 && visited[i][x - (y - i)])
-				|| (x + (y - i) < n && visited[i][x + (y - i)]))
+			if (queens[i] == queens[y]
+				|| abs(queens[y] - queens[i]) == y - i) {
 				isPossible = false;
-
-			if (!isPossible)
 				break;
+			}
 		}
 
-		if (isPossible) {
-			visited[y][x] = true;
+		if (isPossible)
 			NQueen(y + 1);
-			visited[y][x] = false;
-		}
 	}
 }
 
