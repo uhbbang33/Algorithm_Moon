@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
 int main() {
@@ -10,19 +9,18 @@ int main() {
 	cin >> n;
 
 	int result = 0;
-	for (int i = 1; i <= n; ++i) {
-		string s = to_string(i);
+	for (int i = 0; i < n; ++i) {
+		int temp = i;
+		++result;
 
-		for (int j = 0; j < s.length(); ++j) {
-			string temp = "";
-			temp += s[j];
-			temp += s[j + 1];
-			if (temp == "50" && i != n) {
+		while (temp > 0) {
+			if (temp % 100 == 50) {
 				++result;
 				break;
 			}
+			else
+				temp /= 10;
 		}
-		++result;
 	}
 	cout << result;
 
