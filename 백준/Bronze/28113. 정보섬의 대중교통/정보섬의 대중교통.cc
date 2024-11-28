@@ -8,19 +8,12 @@ int main() {
 	int n, a, b;
 	cin >> n >> a >> b;
 	
-	bool possibleSubway = false;
-	if (b - n >= 0)
-		possibleSubway = true;
-
-	if (!possibleSubway)
+	if (b > a)
 		cout << "Bus";
-	else {
-		if (b > a)
-			cout << "Bus";
-		else if (b == a)
-			cout << "Anything";
-		else
-			cout << "Subway";
-	}
+	else if (b == a)
+		cout << "Anything";
+	else
+		cout << "Subway";
+
 	return 0;
 }
