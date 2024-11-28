@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 using namespace std;
 
 #define MAX_RESULT 1000000000
@@ -16,7 +17,7 @@ void CalculatePowerDiff() {
 		for (int j = 0; j < n; ++j) {
 			if (isSelected[i] && isSelected[j])
 				startTeamPower += arr[i][j];
-			else if (!isSelected[i] && !isSelected[j])
+			else if (!isSelected[i] && !isSelected[j]) 
 				linkTeamPower += arr[i][j];
 		}
 	}
@@ -30,12 +31,10 @@ void SelectMember(int cnt, int cur) {
 		return;
 	}
 
-	for (int i = cur + 1; i < n; ++i) {
-		if (!isSelected[i]) {
-			isSelected[i] = true;
-			SelectMember(cnt + 1, i);
-			isSelected[i] = false;
-		}
+	for (int i = cur; i < n - 1; ++i) {
+		isSelected[i] = true;
+		SelectMember(cnt + 1, i + 1);
+		isSelected[i] = false;
 	}
 }
 
@@ -49,7 +48,7 @@ int main() {
 		for (int j = 0; j < n; ++j)
 			cin >> arr[i][j];
 
-	SelectMember(0, -1);
+	SelectMember(0, 0);
 
 	cout << result;
 
