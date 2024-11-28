@@ -14,11 +14,11 @@ void CalculatePowerDiff() {
 	int linkTeamPower = 0;
 
 	for (int i = 0; i < n; ++i) {
-		for (int j = 0; j < n; ++j) {
+		for (int j = i; j < n; ++j) {
 			if (isSelected[i] && isSelected[j])
-				startTeamPower += arr[i][j];
-			else if (!isSelected[i] && !isSelected[j]) 
-				linkTeamPower += arr[i][j];
+				startTeamPower += arr[i][j] + arr[j][i];
+			else if (!isSelected[i] && !isSelected[j])
+				linkTeamPower += arr[i][j] + arr[j][i];
 		}
 	}
 
@@ -31,7 +31,7 @@ void SelectMember(int cnt, int cur) {
 		return;
 	}
 
-	for (int i = cur; i < n - 1; ++i) {
+	for (int i = cur; i < n / 2 + cnt; ++i) {
 		isSelected[i] = true;
 		SelectMember(cnt + 1, i + 1);
 		isSelected[i] = false;
