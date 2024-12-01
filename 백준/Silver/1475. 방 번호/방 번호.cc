@@ -9,14 +9,10 @@ int main() {
 	cin >> s;
 
 	int arr[10]{};
-	for (int i = 0; i < s.length(); ++i) 
+	for (int i = 0; i < s.length(); ++i)
 		++arr[s[i] - '0'];
 
-	int temp = arr[9] + arr[6];
-	if (temp % 2 == 0)
-		arr[6] = temp / 2;
-	else
-		arr[6] = temp / 2 + 1;
+	arr[6] = (arr[6] + arr[9] + 1) / 2;
 
 	int result = 0;
 	for (int i = 0; i < 9; ++i) 
