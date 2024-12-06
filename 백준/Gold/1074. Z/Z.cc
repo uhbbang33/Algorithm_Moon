@@ -1,5 +1,4 @@
 #include <iostream>
-#include <math.h>
 using namespace std;
 
 #define Z_MIN_SIZE 4
@@ -44,8 +43,6 @@ void Func(int y, int x, int size) {
 			cout << num + 2;
 		if (y + 1 == r && x + 1 == c)
 			cout << num + 3;
-
-		num += 4;
 	}
 }
 
@@ -55,7 +52,11 @@ int main() {
 
 	cin >> n >> r >> c;
 
-	Func(0, 0, pow(2, n));
+	int size = 1;
+	for (int i = 0; i < n; ++i)
+		size *= 2;
+
+	Func(0, 0, size);
 
 	return 0;
 }
