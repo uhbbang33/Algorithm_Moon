@@ -34,11 +34,11 @@ int main() {
 		parent[i] = i;
 
 	for (int i = 0; i < m; ++i) {
-		bool isUnionOper;
+		bool oper;
 		int a, b;
-		cin >> isUnionOper >> a >> b;
+		cin >> oper >> a >> b;
 
-		if (isUnionOper) {
+		if (oper) {
 			if (GetParent(a) == GetParent(b))
 				cout << "YES\n";
 			else
