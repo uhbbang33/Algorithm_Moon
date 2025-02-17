@@ -1,11 +1,12 @@
 #include <iostream>
 #include <queue>
+#include <vector>
 using namespace std;
 
 int n, l, r;
 int arr[51][51]{};
-bool visited[51][51]{};
-int dayCnt = -1;
+int visited[51][51]{};
+int dayCnt = 0;
 int curCnt = -1;
 
 int dy[4] = { 1, -1, 0, 0 };
@@ -13,44 +14,46 @@ int dx[4] = { 0, 0, -1, 1 };
 
 void BFS(int y, int x) {
 	queue<pair<int, int>> q;
-	int sum = 0;
+	vector<pair<int, int>> unionVec;
 
 	q.push({ y,x });
-	visited[y][x] = true;
-	sum += arr[y][x];
+	unionVec.push_back({ y,x });
+	visited[y][x] = dayCnt;
 
-	queue<pair<int, int>> unionQueue;
+	int sum = 0;
+	sum += arr[y][x];
 
 	while (!q.empty()) {
 		int curY = q.front().first;
 		int curX = q.front().second;
 		q.pop();
-		
-		unionQueue.push({ curY, curX });
 
 		for (int i = 0; i < 4; ++i) {
 			int ny = curY + dy[i];
 			int nx = curX + dx[i];
 
 			if (ny < 0 || ny >= n || nx < 0 || nx >= n
-				|| visited[ny][nx])
+				|| visited[ny][nx] == dayCnt)
 				continue;
 
 			int diff = abs(arr[ny][nx] - arr[curY][curX]);
 			if (diff < l || r < diff)
 				continue;
 
-			visited[ny][nx] = true;
+			visited[ny][nx] = dayCnt;
 			q.push({ ny, nx });
 			sum += arr[ny][nx];
-			++curCnt;
+			unionVec.push_back({ ny,nx });
 		}
 	}
 
-	int aver = sum / unionQueue.size();
-	while (!unionQueue.empty()) {
-		arr[unionQueue.front().first][unionQueue.front().second] = aver;
-		unionQueue.pop();
+	if (unionVec.size() > 1) {
+		int aver = sum / unionVec.size();
+
+		for (auto cur : unionVec)
+			arr[cur.first][cur.second] = aver;
+
+		++curCnt;
 	}
 }
 
@@ -65,20 +68,16 @@ int main() {
 			cin >> arr[i][j];
 
 	while (curCnt != 0) {
-		for (int i = 0; i < n; ++i)
-			for (int j = 0; j < n; ++j)
-				visited[i][j] = false;
-
-		curCnt = 0;
-		for (int i = 0; i < n; ++i)
-			for (int j = 0; j < n; ++j)
-				if (!visited[i][j])
-					BFS(i, j);
-
 		++dayCnt;
+		curCnt = 0;
+
+		for (int i = 0; i < n; ++i)
+			for (int j = 0; j < n; ++j)
+				if (visited[i][j] != dayCnt)
+					BFS(i, j);
 	}
 
-	cout << dayCnt;
+	cout << dayCnt - 1;
 
 	return 0;
 }
