@@ -1,8 +1,9 @@
 #include <iostream>
-#include <queue>
 using namespace std;
 
-int cnt[17][17]{};
+// y, x, 들어온 유형(가로, 세로, 대각선)
+int dp[17][17][3]{};
+
 bool isWall[17][17]{};
 
 int main() {
@@ -16,50 +17,22 @@ int main() {
 		for (int j = 1; j <= n; ++j)
 			cin >> isWall[i][j];
 
-	queue<pair<pair<int, int>, pair<int, int>>> q;
-	q.push({ { 1,1 }, { 1, 2 } });
+	dp[1][2][0] = 1;
 
-	while (!q.empty()) {
-		pair<int, int> head = q.front().first;
-		pair<int, int> tail = q.front().second;
+	for (int i = 1; i <= n; ++i)
+		for (int j = 3; j <= n; ++j)
+		{
+			if (isWall[i][j])
+				continue;
 
-		int headY = head.first;
-		int headX = head.second;
-		int tailY = tail.first;
-		int tailX = tail.second;
+			if (!isWall[i - 1][j] && !isWall[i][j - 1])
+				dp[i][j][2] = dp[i - 1][j - 1][0] + dp[i - 1][j - 1][1] + dp[i - 1][j - 1][2];
 
-		q.pop();
-
-		pair<int, int> horizonDiff = { tailY, tailX + 1 };
-		pair<int, int> verticalDiff = { tailY + 1, tailX };
-		pair<int, int> diagonalDiff = { tailY + 1, tailX + 1 };
-
-		// 가로 or 대각선
-		if (headY == tailY || (headX != tailX && headY != tailY)) {
-			if (horizonDiff.second <= n && !isWall[horizonDiff.first][horizonDiff.second]) {
-				q.push({ tail, horizonDiff });
-				++cnt[horizonDiff.first][horizonDiff.second];
-			}
+			dp[i][j][0] = dp[i][j - 1][0] + dp[i][j - 1][2];
+			dp[i][j][1] = dp[i - 1][j][1] + dp[i - 1][j][2];
 		}
 
-		// 세로 or 대각선
-		if (headX == tailX || (headX != tailX && headY != tailY)) {
-			if (verticalDiff.first <= n && !isWall[verticalDiff.first][verticalDiff.second]) {
-				q.push({ tail, verticalDiff });
-				++cnt[verticalDiff.first][verticalDiff.second];
-			}
-		}
-
-		if (diagonalDiff.first <= n && diagonalDiff.second <= n
-			&& !isWall[horizonDiff.first][horizonDiff.second]
-			&& !isWall[diagonalDiff.first][diagonalDiff.second]
-			&& !isWall[verticalDiff.first][verticalDiff.second]) {
-			q.push({ tail, diagonalDiff });
-			++cnt[diagonalDiff.first][diagonalDiff.second];
-		}
-	}
-
-	cout << cnt[n][n];
+	cout << dp[n][n][0] + dp[n][n][1] + dp[n][n][2];
 
 	return 0;
 }
