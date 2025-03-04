@@ -19,11 +19,12 @@ int main() {
 
 	// top, up, right, left, down, bottom
 	int dice[6]{ 0,0,0,0,0,0 };
-	int curY = y, curX = x;
 
 	for (int i = 0; i < k; ++i) {
 		int move;
 		cin >> move;
+        
+        int curY = y, curX = x;
 
 		int tempDice[6]{};
 		for (int i = 0; i < 6; ++i)
@@ -45,6 +46,14 @@ int main() {
 
 			--curX;
 		}
+		else if (move == NORTH) {
+			tempDice[TOP] = dice[UP];
+			tempDice[UP] = dice[BOTTOM];
+			tempDice[DOWN] = dice[TOP];
+			tempDice[BOTTOM] = dice[DOWN];
+
+			--curY;
+		}
 		else if (move == SOUTH) {
 			tempDice[TOP] = dice[DOWN];
 			tempDice[UP] = dice[TOP];
@@ -53,20 +62,9 @@ int main() {
 
 			++curY;
 		}
-		else if (move == NORTH) {
-			tempDice[TOP] = dice[UP];
-			tempDice[UP] = dice[BOTTOM];
-			tempDice[DOWN] = dice[TOP];
-			tempDice[BOTTOM] = dice[DOWN];
-			
-			--curY;
-		}
 
-		if (curY >= n || curX >= m || curY < 0 || curX < 0) {
-			curY = y;
-			curX = x;
+		if (curY >= n || curX >= m || curY < 0 || curX < 0) 
 			continue;
-		}
 
 		y = curY;
 		x = curX;
