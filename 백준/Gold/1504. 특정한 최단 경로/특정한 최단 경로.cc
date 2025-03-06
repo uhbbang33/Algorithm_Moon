@@ -6,15 +6,12 @@ using namespace std;
 #define INF 100000000
 
 int n;
-vector<pair<int, int>> edge[200001]{}; // 연결된 정점, 거리
+vector<pair<int, int>> edge[801]{}; // 연결된 정점, 거리
 int dp[801]{};
-bool visited[801]{};
 
 void InitArr() {
-	for (int i = 1; i <= n; ++i) {
+	for (int i = 1; i <= n; ++i)
 		dp[i] = INF;
-		visited[i] = false;
-	}
 }
 
 void Dijkstra(int start) {
@@ -28,16 +25,12 @@ void Dijkstra(int start) {
 		int curVertex = pq.top().second;
 		pq.pop();
 
-		visited[curVertex] = true;
-
 		if (distance > dp[curVertex])
 			continue;
 
 		for (int i = 0; i < edge[curVertex].size(); ++i) {
 			int nextVertex = edge[curVertex][i].first;
 			int nextDistance = distance + edge[curVertex][i].second;
-
-			if (visited[nextVertex]) continue;
 
 			if (nextDistance < dp[nextVertex]) {
 				dp[nextVertex] = nextDistance;
