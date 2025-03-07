@@ -1,5 +1,4 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
 #include <queue>
 using namespace std;
@@ -9,7 +8,7 @@ using namespace std;
 
 int k;
 
-vector<int> resultVec;
+priority_queue<int, vector<int>, greater<>> result;
 vector<int> edge[MAX_CITY_CNT];
 bool visited[MAX_CITY_CNT]{};
 
@@ -34,7 +33,7 @@ void Dijkstra(int start) {
 			visited[nextCity] = true;
 
 			if (nextDistance == k)
-				resultVec.push_back(nextCity);
+				result.push(nextCity);
 			else
 				pq.push({ nextDistance, nextCity });
 		}
@@ -57,13 +56,13 @@ int main() {
 
 	Dijkstra(x);
 
-	if (resultVec.size() == 0)
+	if (result.size() == 0)
 		cout << "-1";
 	else {
-		sort(resultVec.begin(), resultVec.end());
-		for (int result : resultVec)
-			cout << result << "\n";
+		while (!result.empty()) {
+			cout << result.top() << "\n";
+			result.pop();
+		}
 	}
-
 	return 0;
 }
