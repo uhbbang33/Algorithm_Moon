@@ -9,8 +9,8 @@ using namespace std;
 int k;
 
 priority_queue<int, vector<int>, greater<>> result;
-vector<int> edge[MAX_CITY_CNT];
-bool visited[MAX_CITY_CNT]{};
+vector<vector<int>> edge;
+vector<int> visited;
 
 void Dijkstra(int start) {
 	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq; // 거리, 정점
@@ -46,6 +46,9 @@ int main() {
 
 	int n, m, x;
 	cin >> n >> m >> k >> x;
+
+	edge.resize(n + 1);
+	visited.resize(n + 1);
 
 	for (int i = 0; i < m; ++i) {
 		int a, b;
