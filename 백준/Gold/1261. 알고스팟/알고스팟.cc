@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <queue>
 using namespace std;
 
@@ -8,8 +9,8 @@ int n, m;
 int dy[4]{1, -1, 0, 0};
 int dx[4]{0, 0, -1, 1};
 
-char maze[101][101]{};
-bool isVisited[101][101]{};
+vector<vector<char>> maze;
+vector<vector<bool>> isVisited;
 
 int Dijkstra() {
 	// 부순 벽 개수, (y, x)
@@ -51,9 +52,16 @@ int main() {
 
 	cin >> m >> n;
 
-	for (int i = 0; i < n; ++i) 
-		for (int j = 0; j < m; ++j) 
+	maze.resize(n);
+	isVisited.resize(n);
+
+	for (int i = 0; i < n; ++i) {
+		maze[i].resize(m);
+		isVisited[i].resize(m);
+
+		for (int j = 0; j < m; ++j)
 			cin >> maze[i][j];
+	}
 	
 	cout << Dijkstra();
 
