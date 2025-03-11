@@ -5,44 +5,34 @@ using namespace std;
 
 #define INF 1000000000
 
-typedef pair<int, vector<int>> myType;
-
 vector<pair<int,int>> bus[1001];
-int dp[1001]{};
+pair<int, int> dp[1001]{};	// 최소비용, 직전 정점
 
-vector<int> Dijkstra(int start, int end) {
-	vector<int> v;
-	v.push_back(start);
+void Dijkstra(int start, int end) {
+	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq; // cost, 정점
+	pq.push({ 0, start });
 
-	priority_queue<myType, vector<myType>, greater<>> pq; // cost, 정점
-	pq.push({ 0, v });
-
-	dp[start] = 0;
+	dp[start] = { 0,0 };
 	
 	while (!pq.empty()) {
 		int curCost = pq.top().first;
-		vector<int> curVec = pq.top().second;
-		int curCity = curVec.back();
+		int curCity = pq.top().second;
+		pq.pop();
 
 		if (curCity == end)
-			return curVec;
-
-		pq.pop();
+			return;
 
 		for (int i = 0; i < bus[curCity].size(); ++i) {
 			int nextCity = bus[curCity][i].first;
 			int nextCost = curCost + bus[curCity][i].second;
 
-			if (dp[nextCity] <= nextCost) continue;
-			dp[nextCity] = nextCost;
+			if (dp[nextCity].first <= nextCost) continue;
 
-			curVec.push_back(nextCity);
-			pq.push({ nextCost, curVec });
-			curVec.pop_back();
+			dp[nextCity].first = nextCost;
+			dp[nextCity].second = curCity;
+			pq.push({ nextCost, nextCity });
 		}
 	}
-
-	return v;
 }
 
 int main() {
@@ -60,18 +50,27 @@ int main() {
 	}
 
 	for (int i = 1; i <= n; ++i)
-		dp[i] = INF;
+		dp[i] = { INF, 0 };
 
 	int startCity, endCity;
 	cin >> startCity >> endCity;
 
-	vector<int> result = Dijkstra(startCity, endCity);
-	
-	cout << dp[endCity] << "\n";
+	Dijkstra(startCity, endCity);
+
+	cout << dp[endCity].first << "\n";
+
+	vector<int> result;
+	result.push_back(endCity);
+
+	int temp = dp[endCity].second;
+	while (temp != 0) {
+		result.push_back(temp);
+		temp = dp[temp].second;
+	}
 	cout << result.size() << "\n";
 
-	for (int r : result)
-		cout << r << " ";
+	for (int i = result.size() - 1; i >= 0; --i)
+		cout << result[i] << " ";
 
 	return 0;
 }
