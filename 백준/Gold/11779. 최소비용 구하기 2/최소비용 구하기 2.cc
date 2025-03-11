@@ -60,13 +60,9 @@ int main() {
 	cout << dp[endCity].first << "\n";
 
 	vector<int> result;
-	result.push_back(endCity);
+	for (int i = endCity; i != 0; i = dp[i].second)
+		result.push_back(i);
 
-	int temp = dp[endCity].second;
-	while (temp != 0) {
-		result.push_back(temp);
-		temp = dp[temp].second;
-	}
 	cout << result.size() << "\n";
 
 	for (int i = result.size() - 1; i >= 0; --i)
