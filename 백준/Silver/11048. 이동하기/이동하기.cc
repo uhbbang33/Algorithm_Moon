@@ -15,7 +15,7 @@ int main() {
 			int candy;
 			cin >> candy;
 
-			dp[i][j] = max(dp[i - 1][j - 1], max(dp[i - 1][j], dp[i][j - 1]));
+			dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
 			dp[i][j] += candy;
 		}
 
