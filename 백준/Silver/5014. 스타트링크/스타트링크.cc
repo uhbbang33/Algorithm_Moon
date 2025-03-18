@@ -2,7 +2,7 @@
 #include <queue>
 using namespace std;
 
-int visitCnt[1000001]{};
+bool visited[1000001]{};
 
 int main() {
 	ios::sync_with_stdio(false);
@@ -11,42 +11,37 @@ int main() {
 	int highest, s, target, u, d;
 	cin >> highest >> s >> target >> u >> d;
 
-	if (s == target) {
-		cout << "0";
-		return 0;
-	}
-
 	// 층, 움직인 횟수
 	queue<pair<int, int>> q;
 	q.push({ s, 0 });
+	visited[s] = true;
 
-	int result = 0;
+	int result = -1;
 
 	while (!q.empty()) {
 		int floor = q.front().first;
 		int cnt = q.front().second;
+		q.pop();
 
 		if (floor == target) {
 			result = cnt;
 			break;
 		}
 
-		q.pop();
-
 		int upFloor = floor + u;
-		if (upFloor <= highest && (!visitCnt[upFloor] || visitCnt[upFloor] > cnt + 1)) {
+		if (upFloor <= highest && !visited[upFloor]) {
 			q.push({ upFloor, cnt + 1 });
-			visitCnt[upFloor] = cnt + 1;
+			visited[upFloor] = true;
 		}
 
 		int downFloor = floor - d;
-		if (downFloor > 0 && (!visitCnt[downFloor] || visitCnt[downFloor] > cnt + 1)) {
+		if (downFloor > 0 && !visited[downFloor]) {
 			q.push({ downFloor, cnt + 1 });
-			visitCnt[downFloor] = cnt + 1;
+			visited[downFloor] = true;
 		}
 	}
 
-	if (result == 0)
+	if (result == -1)
 		cout << "use the stairs";
 	else
 		cout << result;
