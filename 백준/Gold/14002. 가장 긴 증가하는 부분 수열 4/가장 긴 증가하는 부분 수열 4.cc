@@ -3,7 +3,8 @@
 using namespace std;
 
 int arr[1001]{};
-pair<int, vector<int>> dp[1001]{};
+int dp[1001]{};
+int prevIndex[1001]{};
 
 int main() {
 	ios::sync_with_stdio(false);
@@ -12,31 +13,38 @@ int main() {
 	int n;
 	cin >> n;
 
-	vector<int> maxVec;
-	
+	int resultCnt = 0;
+	int lastIndex = 0;
+
 	for (int i = 1; i <= n; ++i) {
 		cin >> arr[i];
+
 		for (int j = i - 1; j >= 0; --j) {
 			if (arr[j] < arr[i]) {
-				if (dp[i].first > dp[j].first + 1)
+				if (dp[i] > dp[j] + 1)
 					continue;
 
-				dp[i].first = dp[j].first + 1;
-				dp[i].second = dp[j].second;
-				
-				dp[i].second.push_back(arr[i]);
+				dp[i] = dp[j] + 1;
+				prevIndex[i] = j;
 			}
 		}
-		
-		if (dp[i].first > maxVec.size()) 
-			maxVec = dp[i].second;
+
+		if (dp[i] > resultCnt) {
+			resultCnt = dp[i];
+			lastIndex = i;
+		}
 	}
 
-	cout << maxVec.size() << "\n";
-	for (int a : maxVec) {
-		cout << a << " ";
+	cout << resultCnt << "\n";
+
+	vector<int> resultVec;
+	while (lastIndex != 0) {
+		resultVec.push_back(arr[lastIndex]);
+		lastIndex = prevIndex[lastIndex];
 	}
 
+	for (int i = resultVec.size() - 1; i >= 0; --i)
+		cout << resultVec[i] << " ";
 
 	return 0;
 }
