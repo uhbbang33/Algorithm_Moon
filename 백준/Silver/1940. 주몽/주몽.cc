@@ -3,6 +3,8 @@
 #include <algorithm>
 using namespace std;
 
+int v[15001]{};
+
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
@@ -10,11 +12,11 @@ int main() {
 	int n, m;
 	cin >> n >> m;
 	
-	vector<int> v(n);
+	//vector<int> v(n);
 	for (int i = 0; i < n; ++i) 
 		cin >> v[i];
 
-	sort(v.begin(), v.end());
+	sort(v, v+n);
 
 	int result = 0;
 	int left= 0, right = n - 1;
@@ -26,12 +28,10 @@ int main() {
 			++left;
 			--right;
 		}
-		else if (sum < m) {
+		else if (sum < m) 
 			++left;
-		}
-		else if (sum > m) {
+		else if (sum > m) 
 			--right;
-		}
 	}
 
 	cout << result;
