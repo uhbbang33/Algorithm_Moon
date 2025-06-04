@@ -8,7 +8,7 @@ int main() {
 	int n;
 	cin >> n;
 
-	int dp[81]{};
+	long long dp[81]{};
 	dp[1] = 4;
 	dp[2] = 6;
 
