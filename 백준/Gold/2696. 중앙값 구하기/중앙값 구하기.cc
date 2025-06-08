@@ -25,18 +25,17 @@ int main() {
 
 			pq.push(a);
 
-			while (!pqGreater.empty() && !pq.empty()
+			if (!pqGreater.empty()
 				&& pq.top() > pqGreater.top()) {
 				pqGreater.push(pq.top());
 				pq.pop();
 			}
 
-			while (pq.size() <= pqGreater.size()) {
+			if (pq.size() < pqGreater.size()) {
 				pq.push(pqGreater.top());
 				pqGreater.pop();
 			}
-
-			while (pq.size() > pqGreater.size() + 1) {
+			else if (pq.size() > pqGreater.size() + 1) {
 				pqGreater.push(pq.top());
 				pq.pop();
 			}
