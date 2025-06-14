@@ -9,16 +9,10 @@ int main() {
 	cin >> t;
 
 	while (t--) {
-		int a, b;
+		long long a, b;
 		cin >> a >> b;
 
-		int sum = 0;
-
-		for (int j = 0; j < a + b; ++j)
-			for (int k = 0; k < j; ++k)
-				++sum;
-
-		cout << (a + b) * sum << "\n";
+		cout << (a + b) * (a + b) * (a + b - 1) / 2<< "\n";
 	}
 
 	return 0;
