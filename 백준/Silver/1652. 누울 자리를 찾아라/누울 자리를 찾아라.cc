@@ -17,37 +17,33 @@ int main() {
 
 	int result = 0;
 	for (int i = 0; i < n; ++i) {
-		bool possible = true;
+		int empty = 0;
 
-		for (int j = 0; j < n - 1; ++j) {
-			if (possible 
-				&& board[i][j] == '.' 
-				&& board[i][j + 1] == '.') {
+		for (int j = 0; j < n; ++j) {
+			if (board[i][j] == '.')
+				++empty;
+			else
+				empty = 0;
+
+			if (empty == 2)
 				++result;
-				possible = false;
-			}
-			if (board[i][j] == 'X')
-				possible = true;
 		}
-
 
 	}
 	cout << result << " ";
 	result = 0;
 
 	for (int i = 0; i < n; ++i) {
-		bool possible = true;
+		int empty = 0;
 
-		for (int j = 0; j < n - 1; ++j) {
-			if (possible
-				&& board[j][i] == '.'
-				&& board[j + 1][i] == '.') {
+		for (int j = 0; j < n; ++j) {
+			if (board[j][i] == '.')
+				++empty;
+			else
+				empty = 0;
+
+			if (empty == 2)
 				++result;
-				possible = false;
-			}
-
-			if (board[j][i] == 'X')
-				possible = true;
 		}
 	}
 	cout << result;
