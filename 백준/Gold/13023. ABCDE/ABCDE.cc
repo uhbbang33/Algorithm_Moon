@@ -1,39 +1,29 @@
 #include <iostream>
 #include <vector>
-#include <queue>
-#include <set>
 using namespace std;
 
 vector<vector<int>> v;
 
-bool BFS(int start) {
-	queue<pair<int, set<int>>> q;
-	set<int> s{ start };
+bool visited[2001]{};
+bool possible = false;
 
-	q.push({ start, s});
-
-	while (!q.empty()) {
-		int cur = q.front().first;
-		set<int> curSet = q.front().second;
-		q.pop();
-		
-		for (int i = 0; i < v[cur].size(); ++i) {
-			int next = v[cur][i];
-
-			if (curSet.find(next) != curSet.end())
-				continue;
-
-			set<int> nextSet = curSet;
-			nextSet.insert(next);
-
-			q.push({ next, nextSet });
-
-			if (nextSet.size() == 5)
-				return true;
-		}
+void DFS(int node, int cnt) {
+	if (cnt == 5) {
+		possible = true;
+		return;
 	}
 
-	return false;
+	visited[node] = true;
+
+	for (int i = 0; i < v[node].size(); ++i) {
+		int next = v[node][i];
+
+		if (!visited[next]) {
+			DFS(next, cnt + 1);
+
+			visited[next] = false;
+		}
+	}
 }
 
 int main() {
@@ -54,7 +44,12 @@ int main() {
 	}
 
 	for (int i = 0; i < n; ++i) {
-		if (BFS(i)) {
+		if (!visited[i]) {
+			DFS(i, 1);
+			visited[i] = false;
+		}
+
+		if (possible) {
 			cout << "1";
 			return 0;
 		}
