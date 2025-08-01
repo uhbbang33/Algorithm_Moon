@@ -1,8 +1,9 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 
 using namespace std;
+
+int arr[1000001]{};
 
 int main() {
 	ios::sync_with_stdio(false);
@@ -11,19 +12,13 @@ int main() {
 	int n;
 	cin >> n;
 
-	vector<int> v;
-	for (int i = 0; i < n; ++i) {
-		int num;
-		cin >> num;
+	for (int i = 0; i < n; ++i) 
+		cin >> arr[i];
 
-		v.push_back(num);
-	}
+	sort(arr, arr+n);
 
-	sort(v.begin(), v.end());
-
-	for (int a : v)
-		cout << a << "\n";
-
+	for (int i = 0; i < n; ++i)
+		cout << arr[i] << "\n";
 
 	return 0;
 }
