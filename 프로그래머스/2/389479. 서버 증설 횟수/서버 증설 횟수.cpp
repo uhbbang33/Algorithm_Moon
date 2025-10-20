@@ -16,12 +16,10 @@ int solution(vector<int> players, int m, int k) {
                 sv.pop_front();
         }
         
-        while(players[i] >= m * (sv.size() +1) && players[i] >= m){
+        while(players[i] >= m * (sv.size() +1)){
             sv.push_back(k);
             ++answer;
         }
-        
-        
     }
     
     return answer;
